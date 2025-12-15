@@ -40,44 +40,73 @@ json
 Описание:
 
 python
+
 Копировать код
+
 memory[C + B] = bin(memory[D]).count("1")
+
 Прочие (read/write)
+
 read_value: чтение значения из памяти по адресу
 
 write_value: запись значения в память по вычисляемому адресу
 
 Структура проекта
+
 perl
+
 Копировать код
+
 uvm-variant10/
+
 │
 ├── json/          # Исходные JSON-программы
+
 ├── dump/          # Дамп памяти после выполнения программ (.csv)
+
 ├── uvm_asm.py     # Ассемблер
+
 ├── uvm_interp.py  # Интерпретатор
+
 ├── uvm_gui.py     # GUI через Tkinter
+
 ├── uvm_gui_web.py # GUI через Web (Flask)
+
 ├── templates/
 │   └── index.html # Шаблон для веб-GUI
+
 ├── README.md      # Документация
+
 ├── requirements.txt # Зависимости для веб-GUI
+
 Запуск ассемблера
+
 bash
+
 Копировать код
+
 python uvm_asm.py -i json/test_basic.json -o dump/basic.bin -t
+
 Опция -t выводит IR и байткод
 
 Запуск интерпретатора
+
 bash
+
 Копировать код
+
 python uvm_interp.py -i dump/basic.bin -o dump/basic_dump.csv -r 100-110
+
 -r — диапазон адресов для дампа памяти
 
 Запуск GUI (Tkinter)
+
 bash
+
 Копировать код
+
 python uvm_gui.py
+
 Позволяет:
 
 редактировать программу JSON
@@ -89,22 +118,33 @@ python uvm_gui.py
 сохранять бинарник и CSV дамп
 
 Запуск GUI в браузере (Flask)
+
 Установить зависимости:
 
 bash
+
 Копировать код
+
 pip install -r requirements.txt
+
 Запустить приложение:
 
 bash
+
 Копировать код
+
 python uvm_gui_web.py
+
 Открыть в браузере: http://localhost:5000
 
 Этап 5: Решение тестовой задачи (popcnt для векторов длины 8)
+
 Программа vector_popcnt.json
+
 json
+
 Копировать код
+
 [
   { "op": "load_const", "B": 3, "C": 100 },
   { "op": "load_const", "B": 7, "C": 101 },
@@ -113,16 +153,19 @@ json
   { "op": "popcnt", "B": 1, "C": 300, "D": 101 },
   ...
 ]
+
 Результат записывается в адреса 300-307
 
 Дамп: vector_dump.csv
 
 Дополнительные тестовые программы
+
 vector_popcnt_alt1.json → дамп vector_alt1_dump.csv
 
 vector_popcnt_alt2.json → дамп vector_alt2_dump.csv
 
 Проверка работы
+
 Все дампы должны совпадать с ожидаемыми результатами по адресам памяти
 
 IR и байткод можно проверить через опцию -t у ассемблера
